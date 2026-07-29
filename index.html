@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Rekap Keuangan Jamiyyatul Hujjaj Rombongan 06</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f1f5f9;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased pb-20">
+
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-emerald-900 px-4">
+        <div class="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-6 text-center">
+            <div class="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-emerald-500">
+                <i data-lucide="book-open" class="w-8 h-8"></i>
+            </div>
+            <h1 class="text-xl font-bold text-slate-800">JAMIYYATUL HUJJAJ</h1>
+            <p class="text-xs text-emerald-700 font-semibold tracking-wide uppercase mt-1">Rombongan 06 Kloter 63 Th 2024</p>
+            <p class="text-xs text-slate-500 mt-0.5">Kec. Kebonagung, Kab. Demak</p>
+            
+            <form onsubmit="handleLogin(event)" class="mt-6 space-y-4 text-left">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Username / Nama</label>
+                    <div class="relative">
+                        <i data-lucide="user" class="w-5 h-5 absolute left-3 top-2.5 text-slate-400"></i>
+                        <input type="text" id="username" required placeholder="Masukkan nama Anda" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Kata Sandi</label>
+                    <div class="relative">
+                        <i data-lucide="lock" class="w-5 h-5 absolute left-3 top-2.5 text-slate-400"></i>
+                        <input type="password" id="password" required placeholder="Masukkan kata sandi" class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                    </div>
+                </div>
+                <div id="loginError" class="hidden text-xs text-red-500 text-center font-medium">Username atau Password salah!</div>
+                <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white font-bold rounded-xl shadow-lg shadow-emerald-600/30 transition duration-150">
+                    Masuk Aplikasi
+                </button>
+            </form>
+            <p class="text-[11px] text-slate-400 mt-6">Sistem Kas & Jadwal Rutin Anggota</p>
+        </div>
+    </div>
+
+    <!-- MAIN APP CONTENT -->
+    <div id="appScreen" class="hidden max-w-md mx-auto min-h-screen bg-slate-50 relative shadow-xl">
+        <!-- HEADER -->
+        <header class="bg-gradient-to-r from-emerald-800 to-teal-700 text-white p-5 rounded-b-3xl shadow-md">
+            <div class="flex justify-between items-center">
+                <div>
+                    <p class="text-xs text-emerald-200 font-medium">Selamat Datang,</p>
+                    <h2 id="userDisplayName" class="text-lg font-bold text-white">Jamaah</h2>
+                </div>
+                <button onclick="handleLogout()" class="p-2 bg-emerald-700/50 hover:bg-emerald-700 rounded-full text-emerald-100 transition">
+                    <i data-lucide="log-out" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div class="mt-4 pt-3 border-t border-emerald-600/50 text-center">
+                <h1 class="text-sm font-extrabold tracking-wide uppercase text-amber-300">JAMIYYATUL HUJJAJ ROMBONGAN 06</h1>
+                <p class="text-[11px] text-emerald-100">Kloter 63 Th 2024 - Kebonagung, Demak</p>
+            </div>
+        </header>
+
+        <!-- CONTENT AREA -->
+        <main class="p-4 space-y-6">
+
+            <!-- TAB 1: KAS & HIGHLIGHT (DEFAULT) -->
+            <div id="tabKas" class="space-y-5">
+                
+                <!-- CARDS REKAP OTOMATIS -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-slate-100">
+                        <div class="flex items-center space-x-2 text-emerald-600 mb-1">
+                            <i data-lucide="arrow-down-left" class="w-4 h-4"></i>
+                            <span class="text-xs font-semibold text-slate-500">Pemasukan</span>
+                        </div>
+                        <p id="totalMasuk" class="text-base font-extrabold text-slate-800">Rp 0</p>
+                    </div>
+                    <div class="bg-white p-3.5 rounded-2xl shadow-sm border border-slate-100">
+                        <div class="flex items-center space-x-2 text-rose-600 mb-1">
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                            <span class="text-xs font-semibold text-slate-500">Pengeluaran</span>
+                        </div>
+                        <p id="totalKeluar" class="text-base font-extrabold text-slate-800">Rp 0</p>
+                    </div>
+                </div>
+
+                <!-- SALDO KAS -->
+                <div class="bg-gradient-to-br from-emerald-600 to-teal-800 p-4 rounded-2xl shadow-md text-white flex justify-between items-center">
+                    <div>
+                        <p class="text-xs text-emerald-100 font-medium">Sisa Saldo Kas Utama</p>
+                        <p id="saldoKas" class="text-2xl font-black text-amber-300 mt-0.5">Rp 3600000</p>
+                    </div>
+                    <div class="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center">
+                        <i data-lucide="wallet" class="w-6 h-6 text-amber-300"></i>
+                    </div>
+                </div>
+
+                <!-- HIGHLIGHT RINGKASAN NAMA & SETORAN -->
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider flex items-center gap-1.5">
+                            <i data-lucide="users" class="w-4 h-4 text-emerald-600"></i> Highlight Anggota
+                        </h3>
+                        <span class="text-[11px] bg-emerald-50 text-emerald-700 px-2 py-0.5 rounded-full font-semibold">Otomatis</span>
+                    </div>
+                    <div id="highlightList" class="space-y-2 max-h-48 overflow-y-auto pr-1">
+                        <!-- Dynamic Highlight List -->
+                    </div>
+                </div>
+
+                <!-- FORM INPUT TRANSAKSI (KHUSUS BENDAHARA / ADMIN) -->
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+                    <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                        <i data-lucide="plus-circle" class="w-4 h-4 text-emerald-600"></i> Tambah Catatan Transaksi
+                    </h3>
+                    <form onsubmit="handleAddTransaction(event)" class="space-y-3">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Jenis</label>
+                                <select id="txJenis" class="w-full text-xs p-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+                                    <option value="pemasukan">Pemasukan (+)</option>
+                                    <option value="pengeluaran">Pengeluaran (-)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Jumlah (Rp)</label>
+                                <input type="number" id="txJumlah" required placeholder="0" class="w-full text-xs p-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Nama Jamaah (Jika Ada)</label>
+                            <input type="text" id="txNama" placeholder="Contoh: H. Warjo" class="w-full text-xs p-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Keterangan / Keperluan</label>
+                            <input type="text" id="txKet" required placeholder="Contoh: Iuran Rutin / Konsumsi" class="w-full text-xs p-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500 font-medium">
+                        </div>
+                        <button type="submit" class="w-full py-2.5 bg-emerald-700 text-white font-bold text-xs rounded-xl hover:bg-emerald-800 transition">
+                            Simpan Transaksi
+                        </button>
+                    </form>
+                </div>
+
+                <!-- RIWAYAT TRANSAKSI -->
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+                    <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                        <i data-lucide="history" class="w-4 h-4 text-emerald-600"></i> Riwayat Transaksi
+                    </h3>
+                    <div id="txList" class="space-y-2.5 max-h-60 overflow-y-auto pr-1">
+                        <!-- Dynamic Transactions -->
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TAB 2: JADWAL KUMPULAN -->
+            <div id="tabJadwal" class="hidden space-y-4">
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+                    <h3 class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-3 flex items-center gap-1.5">
+                        <i data-lucide="calendar-plus" class="w-4 h-4 text-emerald-600"></i> Tambah Jadwal Rutin
+                    </h3>
+                    <form onsubmit="handleAddSchedule(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Agenda / Acara</label>
+                            <input type="text" id="schAgenda" required placeholder="Contoh: Rutinan Jamiyyatul Hujjaj" class="w-full text-xs p-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Tanggal & Jam</label>
+                                <input type="text" id="schWaktu" required placeholder="Sabtu, 15 Ags 13:00" class="w-full text-xs p-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-semibold text-slate-500 uppercase mb-1">Lokasi / Tuan Rumah</label>
+                                <input type="text" id="schLokasi" required placeholder="Kediaman H. Warjo" class="w-full text-xs p-2.5 rounded-xl border border-slate-200 bg-slate-50 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                            </div>
+                        </div>
+                        <button type="submit" class="w-full py-2.5 bg-emerald-700 text-white font-bold text-xs rounded-xl hover:bg-emerald-800 transition">
+                            Tambah Jadwal
+                        </button>
+                    </form>
+                </div>
+
+                <div id="scheduleList" class="space-y-3">
+                    <!-- Dynamic Schedule Items -->
+                </div>
+            </div>
+
+        </main>
+
+        <!-- BOTTOM NAVIGATION -->
+        <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-slate-200 px-6 py-2 flex justify-around items-center z-40">
+            <button onclick="switchTab('kas')" id="navKas" class="flex flex-col items-center text-emerald-700">
+                <i data-lucide="badge-dollar-sign" class="w-5 h-5"></i>
+                <span class="text-[10px] font-bold mt-1">Keuangan</span>
+            </button>
+            <button onclick="switchTab('jadwal')" id="navJadwal" class="flex flex-col items-center text-slate-400">
+                <i data-lucide="calendar" class="w-5 h-5"></i>
+                <span class="text-[10px] font-bold mt-1">Jadwal Kumpulan</span>
+            </button>
+        </nav>
+    </div>
+
+    <script>
+        // DATA INITIALIZATION (LOCAL STORAGE PERSISTENCE)
+        const DEFAULT_TRANSACTIONS = [
+            { id: 1, jenis: 'pemasukan', nama: 'H. Warjo', jumlah: 300000, ket: 'Iuran Rutin Ahad', tgl: '05/07/2026' },
+            { id: 2, jenis: 'pengeluaran', nama: 'H. Warjo', jumlah: 300000, ket: 'Santunan', tgl: '05/07/2026' },
+            { id: 3, jenis: 'pengeluaran', nama: 'Rihlah & Ziarah', jumlah: 3200000, ket: 'Transportasi Bus', tgl: '19/05/2026' }
+        ];
+
+        const DEFAULT_SCHEDULES = [
+        ];
+
+        let transactions = JSON.parse(localStorage.getItem('jh_tx')) || DEFAULT_TRANSACTIONS;
+        let schedules = JSON.parse(localStorage.getItem('jh_sch')) || DEFAULT_SCHEDULES;
+
+        function saveToStorage() {
+            localStorage.setItem('jh_tx', JSON.stringify(transactions));
+            localStorage.setItem('jh_sch', JSON.stringify(schedules));
+        }
+
+        // FORMAT CURRENCY
+        function formatRp(val) {
+            return 'Rp ' + Number(val).toLocaleString('id-ID');
+        }
+
+        // AUTHENTICATION
+        function handleLogin(e) {
+            e.preventDefault();
+            const user = document.getElementById('username').value.trim();
+            const pass = document.getElementById('password').value.trim();
+
+            if ((user.toLowerCase() === 'admin' && pass === '12345') || (user && pass === '12345')) {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('appScreen').classList.remove('hidden');
+                document.getElementById('userDisplayName').textContent = user;
+                document.getElementById('loginError').classList.add('hidden');
+                renderApp();
+            } else {
+                document.getElementById('loginError').classList.remove('hidden');
+            }
+        }
+
+        function handleLogout() {
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('appScreen').classList.add('hidden');
+        }
+
+        // TAB SWITCHING
+        function switchTab(tab) {
+            const tabKas = document.getElementById('tabKas');
+            const tabJadwal = document.getElementById('tabJadwal');
+            const navKas = document.getElementById('navKas');
+            const navJadwal = document.getElementById('navJadwal');
+
+            if (tab === 'kas') {
+                tabKas.classList.remove('hidden');
+                tabJadwal.classList.add('hidden');
+                navKas.className = "flex flex-col items-center text-emerald-700";
+                navJadwal.className = "flex flex-col items-center text-slate-400";
+            } else {
+                tabKas.classList.add('hidden');
+                tabJadwal.classList.remove('hidden');
+                navKas.className = "flex flex-col items-center text-slate-400";
+                navJadwal.className = "flex flex-col items-center text-emerald-700";
+            }
+        }
+
+        // RENDER LOGIC WITH AUTOMATIC CALCULATIONS
+        function renderApp() {
+            let totalMasuk = 0;
+            let totalKeluar = 0;
+            let memberTotals = {};
+
+            const txList = document.getElementById('txList');
+            txList.innerHTML = '';
+
+            transactions.slice().reverse().forEach((tx, idx) => {
+                if (tx.jenis === 'pemasukan') {
+                    totalMasuk += tx.jumlah;
+                    if (tx.nama && tx.nama !== '-') {
+                        memberTotals[tx.nama] = (memberTotals[tx.nama] || 0) + tx.jumlah;
+                    }
+                } else {
+                    totalKeluar += tx.jumlah;
+                }
+
+                const isIn = tx.jenis === 'pemasukan';
+                const el = document.createElement('div');
+                el.className = 'flex items-center justify-between p-3 bg-slate-50 rounded-xl border border-slate-100 text-xs';
+                el.innerHTML = `
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-full flex items-center justify-center ${isIn ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'}">
+                            <i data-lucide="${isIn ? 'arrow-down-left' : 'arrow-up-right'}" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-slate-800">${tx.ket}</p>
+                            <p class="text-[10px] text-slate-400">${tx.nama && tx.nama !== '-' ? tx.nama + ' • ' : ''}${tx.tgl}</p>
+                        </div>
+                    </div>
+                    <p class="font-bold ${isIn ? 'text-emerald-700' : 'text-rose-600'}">${isIn ? '+' : '-'}${formatRp(tx.jumlah)}</p>
+                `;
+                txList.appendChild(el);
+            });
+
+            // UPDATE TOTALS
+            document.getElementById('totalMasuk').textContent = formatRp(totalMasuk);
+            document.getElementById('totalKeluar').textContent = formatRp(totalKeluar);
+            document.getElementById('saldoKas').textContent = formatRp(totalMasuk - totalKeluar);
+
+            // HIGHLIGHT RENDER
+            const highlightList = document.getElementById('highlightList');
+            highlightList.innerHTML = '';
+            
+            if (Object.keys(memberTotals).length === 0) {
+                highlightList.innerHTML = '<p class="text-xs text-slate-400 italic text-center py-2">Belum ada catatan setoran perorangan</p>';
+            } else {
+                for (const [nama, total] of Object.entries(memberTotals)) {
+                    const hEl = document.createElement('div');
+                    hEl.className = 'flex justify-between items-center bg-emerald-50/60 px-3 py-2 rounded-xl text-xs';
+                    hEl.innerHTML = `
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="user-check" class="w-3.5 h-3.5 text-emerald-600"></i>
+                            <span class="font-semibold text-slate-700">${nama}</span>
+                        </div>
+                        <span class="font-bold text-emerald-800">${formatRp(total)}</span>
+                    `;
+                    highlightList.appendChild(hEl);
+                }
+            }
+
+            // SCHEDULE RENDER
+            const scheduleList = document.getElementById('scheduleList');
+            scheduleList.innerHTML = '';
+
+            schedules.forEach(sch => {
+                const sEl = document.createElement('div');
+                sEl.className = 'bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-2 text-xs';
+                sEl.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <h4 class="font-bold text-slate-800 text-sm">${sch.agenda}</h4>
+                        <span class="bg-amber-100 text-amber-800 text-[10px] font-bold px-2 py-0.5 rounded-md">Rutin</span>
+                    </div>
+                    <div class="space-y-1 text-slate-600 text-[11px]">
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="clock" class="w-3.5 h-3.5 text-emerald-600"></i>
+                            <span>${sch.waktu}</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-emerald-600"></i>
+                            <span>${sch.lokasi}</span>
+                        </div>
+                    </div>
+                    ${sch.ket ? `<p class="text-[10px] text-slate-400 border-t pt-1.5 mt-2 italic">${sch.ket}</p>` : ''}
+                `;
+                scheduleList.appendChild(sEl);
+            });
+
+            lucide.createIcons();
+        }
+
+        // HANDLERS
+        function handleAddTransaction(e) {
+            e.preventDefault();
+            const jenis = document.getElementById('txJenis').value;
+            const jumlah = parseFloat(document.getElementById('txJumlah').value);
+            const nama = document.getElementById('txNama').value.trim() || '-';
+            const ket = document.getElementById('txKet').value.trim();
+
+            const newTx = {
+                id: Date.now(),
+                jenis,
+                jumlah,
+                nama,
+                ket,
+                tgl: new Date().toLocaleDateString('id-ID', { day: '2-digit', month: '2-digit', year: 'numeric' })
+            };
+
+            transactions.push(newTx);
+            saveToStorage();
+            renderApp();
+
+            document.getElementById('txJumlah').value = '';
+            document.getElementById('txNama').value = '';
+            document.getElementById('txKetp').value = '';
+        }
+
+        function handleAddSchedule(e) {
+            e.preventDefault();
+            const agenda = document.getElementById('schAgenda').value.trim();
+            const waktu = document.getElementById('schWaktu').value.trim();
+            const lokasi = document.getElementById('schLokasi').value.trim();
+
+            const newSch = {
+                id: Date.now(),
+                agenda,
+                waktu,
+                lokasi,
+                ket: 'Informasi Kumpulan Jamiyyatul Hujjaj'
+            };
+
+            schedules.push(newSch);
+            saveToStorage();
+            renderApp();
+
+            document.getElementById('schAgenda').value = '';
+            document.getElementById('schWaktu').value = '';
+            document.getElementById('schLokasi').value = '';
+        }
+
+        // INITIALIZE ICONS ON LOAD
+        window.onload = () => {
+            lucide.createIcons();
+        };
+    </script>
+</body>
+</html>
