@@ -21,10 +21,13 @@
     <div id="page-login" class="min-h-screen flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-[2rem] p-6 shadow-2xl text-center space-y-5 my-auto">
             
-            <!-- Logo Lingkaran -->
+            <!-- Logo Lingkaran dengan Fallback -->
             <div class="flex justify-center pt-2">
-                <div class="w-20 h-20 rounded-full bg-emerald-50 border-2 border-emerald-400/40 p-2 flex items-center justify-center overflow-hidden shadow-inner">
-                    <img src="logo.png" alt="Logo" class="w-full h-full object-contain">
+                <div class="w-20 h-20 rounded-full bg-emerald-50 border-2 border-emerald-400/40 p-2 flex items-center justify-center overflow-hidden shadow-inner relative">
+                    <img src="./logo.png" alt="Logo" class="w-full h-full object-contain" onerror="this.style.display='none'; document.getElementById('icon-fallback-login').classList.remove('hidden');">
+                    <div id="icon-fallback-login" class="hidden text-emerald-600">
+                        <i data-lucide="book-open" class="w-10 h-10"></i>
+                    </div>
                 </div>
             </div>
 
@@ -69,8 +72,11 @@
         <!-- Header Lengkung Top Banner -->
         <header class="bg-gradient-to-b from-emerald-800 to-emerald-900 text-white pt-6 pb-12 px-4 rounded-b-[2.5rem] shadow-md text-center relative">
             <div class="flex justify-center mb-2">
-                <div class="w-16 h-16 rounded-full bg-white p-1 shadow-lg border-2 border-emerald-400/30 flex items-center justify-center overflow-hidden">
-                    <img src="logo.png" alt="Logo" class="w-full h-full object-contain">
+                <div class="w-16 h-16 rounded-full bg-white p-1 shadow-lg border-2 border-emerald-400/30 flex items-center justify-center overflow-hidden relative">
+                    <img src="./logo.png" alt="Logo" class="w-full h-full object-contain" onerror="this.style.display='none'; document.getElementById('icon-fallback-app').classList.remove('hidden');">
+                    <div id="icon-fallback-app" class="hidden text-emerald-800">
+                        <i data-lucide="book-open" class="w-8 h-8"></i>
+                    </div>
                 </div>
             </div>
             <h1 class="text-base font-extrabold tracking-wide uppercase text-amber-300">JAMIYYATUL HUJJAJ ROMBONGAN 06</h1>
@@ -207,7 +213,7 @@
 
             </div>
 
-            <!-- ================= TAB 2: JADWAL KUMPULAN (DESAIN SESUAI GAMBAR BARU) ================= -->
+            <!-- ================= TAB 2: JADWAL KUMPULAN ================= -->
             <div id="tab-jadwal" class="hidden space-y-4">
                 
                 <!-- Card Form Tambah Jadwal Rutin -->
@@ -373,7 +379,6 @@
             lucide.createIcons();
         }
 
-        /* ================= LOGIK JADWAL KUMPULAN ================= */
         function getJadwalData() {
             let local = localStorage.getItem("hujjaj_jadwal_db");
             if(!local) {
