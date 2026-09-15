@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JAMIYYATUL HUJJAJ ROMBONGAN06</title>
+    <title>JAMIYYATUL HUJJAJ ROMBONGAN 06</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons -->
@@ -20,8 +20,6 @@
     <!-- ================= 1. HALAMAN LOGIN ================= -->
     <div id="page-login" class="min-h-screen flex items-center justify-center p-4">
         <div class="bg-white w-full max-w-sm rounded-[2rem] p-6 shadow-2xl text-center space-y-5 my-auto">
-            
-            <!-- Logo Lingkaran dengan Fallback -->
             <div class="flex justify-center pt-2">
                 <div class="w-20 h-20 rounded-full bg-emerald-50 border-2 border-emerald-400/40 p-2 flex items-center justify-center overflow-hidden shadow-inner relative">
                     <img src="./logo.png" alt="Logo" class="w-full h-full object-contain" onerror="this.style.display='none'; document.getElementById('icon-fallback-login').classList.remove('hidden');">
@@ -31,14 +29,12 @@
                 </div>
             </div>
 
-            <!-- Judul & Subtitle -->
             <div class="space-y-1">
                 <h1 class="text-xl font-extrabold text-slate-800 tracking-tight">JAMIYYATUL HUJJAJ</h1>
                 <p class="text-[11px] font-bold text-emerald-700 uppercase tracking-wide">ROMBONGAN 06 KLOTER 63 TH 2024</p>
                 <p class="text-xs text-slate-400 font-medium">Kec. Kebonagung, Kab. Demak</p>
             </div>
 
-            <!-- Form Login -->
             <form onsubmit="handleLogin(event)" class="space-y-4 text-left pt-2">
                 <div>
                     <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">USERNAME / NAMA</label>
@@ -69,7 +65,6 @@
     <!-- ================= 2. HALAMAN UTAMA APLIKASI ================= -->
     <div id="page-app" class="hidden min-h-screen bg-slate-50 pb-24">
         
-        <!-- Header Lengkung Top Banner -->
         <header class="bg-gradient-to-b from-emerald-800 to-emerald-900 text-white pt-6 pb-12 px-4 rounded-b-[2.5rem] shadow-md text-center relative">
             <div class="flex justify-center mb-2">
                 <div class="w-16 h-16 rounded-full bg-white p-1 shadow-lg border-2 border-emerald-400/30 flex items-center justify-center overflow-hidden relative">
@@ -82,7 +77,6 @@
             <h1 class="text-base font-extrabold tracking-wide uppercase text-amber-300">JAMIYYATUL HUJJAJ ROMBONGAN 06</h1>
             <p class="text-xs text-emerald-100 font-medium mt-0.5">Kloter 63 Th 2024 - Kebonagung, Demak</p>
             
-            <!-- Tombol Keluar / Logout -->
             <button onclick="handleLogout()" class="absolute top-4 right-4 bg-emerald-700/60 hover:bg-emerald-700 text-emerald-100 px-3 py-1 rounded-full border border-emerald-500/40 text-[11px] font-semibold flex items-center gap-1 backdrop-blur-sm transition">
                 <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
                 <span>Keluar</span>
@@ -91,10 +85,8 @@
 
         <main class="max-w-md mx-auto px-4 -mt-6 space-y-4">
 
-            <!-- ================= TAB 1: KEUANGAN ================= -->
+            <!-- TAB 1: KEUANGAN -->
             <div id="tab-keuangan" class="space-y-4">
-                
-                <!-- Ringkasan Pemasukan & Pengeluaran -->
                 <div class="grid grid-cols-2 gap-3">
                     <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
                         <div class="flex items-center space-x-1.5 text-emerald-600 mb-1">
@@ -112,7 +104,6 @@
                     </div>
                 </div>
 
-                <!-- Kartu Sisa Saldo Kas Utama -->
                 <div class="bg-gradient-to-r from-emerald-800 to-teal-800 text-white rounded-2xl p-5 shadow-lg relative overflow-hidden flex justify-between items-center">
                     <div>
                         <p class="text-xs font-medium text-emerald-200">Sisa Saldo Kas Utama</p>
@@ -123,19 +114,16 @@
                     </div>
                 </div>
 
-                <!-- Highlight Anggota -->
                 <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3">
                     <div class="flex justify-between items-center border-b border-slate-100 pb-2">
                         <div class="flex items-center space-x-2 text-emerald-700">
                             <i data-lucide="users" class="w-4 h-4"></i>
                             <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700">HIGHLIGHT ANGGOTA</h4>
                         </div>
-                        <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2.5 py-0.5 rounded-full font-semibold border border-emerald-100">Otomatis</span>
+                        <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2.5 py-0.5 rounded-full font-semibold border border-emerald-100">Online</span>
                     </div>
 
-                    <div id="highlight-list" class="space-y-2">
-                        <!-- Item highlight dimasukkan via JS -->
-                    </div>
+                    <div id="highlight-list" class="space-y-2"></div>
                 </div>
 
                 <!-- Form Tambah Catatan Transaksi -->
@@ -177,7 +165,7 @@
 
                         <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-xl text-xs transition shadow-md flex items-center justify-center space-x-1.5">
                             <i data-lucide="save" class="w-4 h-4"></i>
-                            <span>Simpan Transaksi</span>
+                            <span>Simpan Transaksi Online</span>
                         </button>
                     </form>
                 </div>
@@ -204,19 +192,15 @@
                                     <th class="py-2 px-1 text-center w-6"></th>
                                 </tr>
                             </thead>
-                            <tbody id="tabel-body" class="text-xs divide-y divide-slate-100">
-                                <!-- Data dimasukkan via JS -->
-                            </tbody>
+                            <tbody id="tabel-body" class="text-xs divide-y divide-slate-100"></tbody>
                         </table>
                     </div>
                 </div>
 
             </div>
 
-            <!-- ================= TAB 2: JADWAL KUMPULAN ================= -->
+            <!-- TAB 2: JADWAL KUMPULAN -->
             <div id="tab-jadwal" class="hidden space-y-4">
-                
-                <!-- Card Form Tambah Jadwal Rutin -->
                 <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 space-y-4">
                     <div class="flex items-center space-x-2 text-emerald-800">
                         <i data-lucide="calendar-plus" class="w-5 h-5"></i>
@@ -246,16 +230,11 @@
                     </form>
                 </div>
 
-                <!-- Container List Jadwal Rutin -->
-                <div id="jadwal-list-container" class="space-y-3">
-                    <!-- Kartu Jadwal dimasukkan via JavaScript -->
-                </div>
-
+                <div id="jadwal-list-container" class="space-y-3"></div>
             </div>
 
         </main>
 
-        <!-- BOTTOM NAVIGATION BAR -->
         <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2 z-50 shadow-lg">
             <div class="max-w-md mx-auto grid grid-cols-2 gap-2 px-6">
                 <button id="nav-btn-keuangan" onclick="switchTab('keuangan')" class="flex flex-col items-center justify-center space-y-1 text-emerald-600 font-bold text-xs">
@@ -270,38 +249,172 @@
         </nav>
     </div>
 
+    <!-- SDK Firebase Modules -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        // CONFIG FIREBASE ASLI KAMU
+        const firebaseConfig = {
+          apiKey: "AIzaSyBRd_i3Drmu2luI9FVeopcs8X-vTVI18bA",
+          authDomain: "kas-jamiyyatul-hujjaj.firebaseapp.com",
+          databaseURL: "https://kas-jamiyyatul-hujjaj-default-rtdb.firebaseio.com",
+          projectId: "kas-jamiyyatul-hujjaj",
+          storageBucket: "kas-jamiyyatul-hujjaj.firebasestorage.app",
+          messagingSenderId: "844143817206",
+          appId: "1:844143817206:web:dad51129934f17cbfad7d7",
+          measurementId: "G-CS1KMLWWS4"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        // Reference Node Realtime
+        const kasRef = ref(db, 'transaksi');
+        const jadwalRef = ref(db, 'jadwal');
+
+        // Render Realtime Transaksi Kas
+        onValue(kasRef, (snapshot) => {
+            const data = snapshot.val();
+            const tbody = document.getElementById("tabel-body");
+            const highlightList = document.getElementById("highlight-list");
+            
+            tbody.innerHTML = "";
+            highlightList.innerHTML = "";
+
+            let totalMasuk = 0;
+            let totalKeluar = 0;
+
+            if (data) {
+                Object.keys(data).forEach((key) => {
+                    const item = data[key];
+                    let jml = parseInt(item.jumlah);
+                    if (item.jenis === "pemasukan") {
+                        totalMasuk += jml;
+                        let hRow = `<div class="flex justify-between items-center bg-emerald-50/60 px-3 py-2 rounded-xl">
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="user-check" class="w-4 h-4 text-emerald-600"></i>
+                                <span class="text-xs font-semibold text-slate-700">${item.nama}</span>
+                            </div>
+                            <span class="text-xs font-bold text-emerald-800">${formatRp(jml)}</span>
+                        </div>`;
+                        highlightList.innerHTML += hRow;
+                    } else {
+                        totalKeluar += jml;
+                    }
+
+                    let btnHapus = `<td class="py-2 px-1 text-center"><button onclick="window.hapusData('${key}')" class="text-red-500 hover:text-red-700"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></td>`;
+
+                    let row = `<tr>
+                        <td class="py-2.5 px-1 whitespace-nowrap text-[10px] text-slate-400 font-medium">${formatTgl(item.tgl)}</td>
+                        <td class="py-2.5 px-1">
+                            <span class="font-semibold text-slate-800 block leading-tight">${item.nama}</span>
+                            <span class="text-[10px] text-slate-400 block">${item.ket || '-'}</span>
+                        </td>
+                        <td class="py-2.5 px-1 text-right font-bold whitespace-nowrap ${item.jenis === 'pemasukan' ? 'text-emerald-600' : 'text-rose-500'}">
+                            ${item.jenis === 'pemasukan' ? '+' : '-'} ${formatRp(jml)}
+                        </td>
+                        ${btnHapus}
+                    </tr>`;
+                    tbody.innerHTML += row;
+                });
+            }
+
+            let saldo = totalMasuk - totalKeluar;
+            document.getElementById("total-pemasukan").innerText = formatRp(totalMasuk);
+            document.getElementById("total-pengeluaran").innerText = formatRp(totalKeluar);
+            document.getElementById("total-saldo").innerText = formatRp(saldo);
+            document.getElementById("input-tgl").valueAsDate = new Date();
+            lucide.createIcons();
+        });
+
+        // Render Realtime Jadwal
+        onValue(jadwalRef, (snapshot) => {
+            const data = snapshot.val();
+            const listContainer = document.getElementById("jadwal-list-container");
+            listContainer.innerHTML = "";
+
+            if (data) {
+                Object.keys(data).forEach((key) => {
+                    const item = data[key];
+                    let card = `
+                    <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 space-y-3 relative">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-base font-extrabold text-slate-800 pr-2">${item.agenda}</h4>
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-amber-100/80 text-amber-800 text-[10px] font-bold px-3 py-1 rounded-full">Rutin</span>
+                                <button onclick="window.hapusJadwal('${key}')" class="text-slate-300 hover:text-red-500 transition">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-1.5 text-xs text-slate-600">
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="clock" class="w-4 h-4 text-emerald-600"></i>
+                                <span class="font-medium">${item.tgljam}</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i data-lucide="map-pin" class="w-4 h-4 text-emerald-600"></i>
+                                <span class="font-medium">${item.lokasi}</span>
+                            </div>
+                        </div>
+
+                        <div class="pt-2 border-t border-slate-100 text-[11px] text-slate-400 italic">
+                            Informasi Kumpulan Jamiyyatul Hujjaj
+                        </div>
+                    </div>`;
+                    listContainer.innerHTML += card;
+                });
+            }
+            lucide.createIcons();
+        });
+
+        // Fungsi Tambah Data ke Firebase
+        window.tambahTransaksi = function(e) {
+            e.preventDefault();
+            push(kasRef, {
+                tgl: document.getElementById("input-tgl").value,
+                nama: document.getElementById("input-nama").value,
+                jenis: document.getElementById("input-jenis").value,
+                jumlah: parseInt(document.getElementById("input-jumlah").value),
+                ket: document.getElementById("input-ket").value
+            });
+            document.getElementById("input-nama").value = "";
+            document.getElementById("input-jumlah").value = "";
+            document.getElementById("input-ket").value = "";
+        };
+
+        window.tambahJadwal = function(e) {
+            e.preventDefault();
+            push(jadwalRef, {
+                agenda: document.getElementById("jadwal-agenda").value,
+                tgljam: document.getElementById("jadwal-tgljam").value,
+                lokasi: document.getElementById("jadwal-lokasi").value
+            });
+            document.getElementById("jadwal-agenda").value = "";
+            document.getElementById("jadwal-tgljam").value = "";
+            document.getElementById("jadwal-lokasi").value = "";
+        };
+
+        window.hapusData = function(key) {
+            if(confirm("Hapus transaksi ini?")) {
+                remove(ref(db, 'transaksi/' + key));
+            }
+        };
+
+        window.hapusJadwal = function(key) {
+            if(confirm("Hapus jadwal ini?")) {
+                remove(ref(db, 'jadwal/' + key));
+            }
+        };
+    </script>
+
     <script>
-        const defaultData = [
-            { id: 1, tgl: "2026-07-01", nama: "Saldo Utama", jenis: "pemasukan", jumlah: 3600000, ket: "Saldo awal" },
-            { id: 2, tgl: "2026-07-05", nama: "H. Warjo", jenis: "pemasukan", jumlah: 300000, ket: "Iuran rutinan" },
-            { id: 3, tgl: "2026-07-05", nama: "Pengeluaran Santunan", jenis: "pengeluaran", jumlah: 300000, ket: "Acara sosial" },
-            { id: 4, tgl: "2026-07-05", nama: "Sewa Bus Rihlah", jenis: "pengeluaran", jumlah: 3200000, ket: "Ziarah Magelang" },
-            { id: 5, tgl: "2026-08-09", nama: "Penambahan biaya", jenis: "pengeluaran", jumlah: 400000, ket: "Ziarah Magelang" },
-            { id: 6, tgl: "2026-07-05", nama: "H. Bambang", jenis: "pemasukan", jumlah: 300000, ket: "Iuran rutinan" }
-        ];
-
-        // DIBERSIHKAN: Menambahkan koma antar objek array
-        const defaultJadwal = [
-            { id: 1, agenda: "Selapanan Ahad Pon", tgljam: "Ahad 09 Ags 2026 - 13:00 WIB", lokasi: "Kediaman H. Bambang (Mijen)" },
-            { id: 2, agenda: "Selapanan Ahad Pon", tgljam: "Ahad 13 September 2026 - 13:00 WIB", lokasi: "Kediaman H. Sholihin (Dempet)" }
-        ];
-
         function handleLogin(e) {
             e.preventDefault();
-            
-            // Ambil input username & password
-            const u = document.getElementById("login-username").value.trim();
-            const p = document.getElementById("login-password").value.trim();
-
-            // Kamu bisa sesuaikan credential di sini jika mau dikunci
-            if (u !== "" && p !== "") {
-                document.getElementById("page-login").classList.add("hidden");
-                document.getElementById("page-app").classList.remove("hidden");
-                renderData();
-                renderJadwal();
-            } else {
-                alert("Masukkan username dan password!");
-            }
+            document.getElementById("page-login").classList.add("hidden");
+            document.getElementById("page-app").classList.remove("hidden");
         }
 
         function handleLogout() {
@@ -328,147 +441,6 @@
             }
         }
 
-        function getData() {
-            let local = localStorage.getItem("hujjaj_kas_db");
-            if(!local) {
-                localStorage.setItem("hujjaj_kas_db", JSON.stringify(defaultData));
-                return defaultData;
-            }
-            return JSON.parse(local);
-        }
-
-        function renderData() {
-            const data = getData();
-            const tbody = document.getElementById("tabel-body");
-            const highlightList = document.getElementById("highlight-list");
-            
-            tbody.innerHTML = "";
-            highlightList.innerHTML = "";
-
-            let totalMasuk = 0;
-            let totalKeluar = 0;
-
-            data.forEach((item) => {
-                let jml = parseInt(item.jumlah);
-                if (item.jenis === "pemasukan") {
-                    totalMasuk += jml;
-                } else {
-                    totalKeluar += jml;
-                }
-
-                if(item.jenis === "pemasukan") {
-                    let hRow = `<div class="flex justify-between items-center bg-emerald-50/60 px-3 py-2 rounded-xl">
-                        <div class="flex items-center space-x-2">
-                            <i data-lucide="user-check" class="w-4 h-4 text-emerald-600"></i>
-                            <span class="text-xs font-semibold text-slate-700">${item.nama}</span>
-                        </div>
-                        <span class="text-xs font-bold text-emerald-800">${formatRp(jml)}</span>
-                    </div>`;
-                    highlightList.innerHTML += hRow;
-                }
-
-                let btnHapus = `<td class="py-2 px-1 text-center"><button onclick="hapusData(${item.id})" class="text-red-500 hover:text-red-700"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></td>`;
-
-                let row = `<tr>
-                    <td class="py-2.5 px-1 whitespace-nowrap text-[10px] text-slate-400 font-medium">${formatTgl(item.tgl)}</td>
-                    <td class="py-2.5 px-1">
-                        <span class="font-semibold text-slate-800 block leading-tight">${item.nama}</span>
-                        <span class="text-[10px] text-slate-400 block">${item.ket || '-'}</span>
-                    </td>
-                    <td class="py-2.5 px-1 text-right font-bold whitespace-nowrap ${item.jenis === 'pemasukan' ? 'text-emerald-600' : 'text-rose-500'}">
-                        ${item.jenis === 'pemasukan' ? '+' : '-'} ${formatRp(jml)}
-                    </td>
-                    ${btnHapus}
-                </tr>`;
-                tbody.innerHTML += row;
-            });
-
-            let saldo = totalMasuk - totalKeluar;
-
-            document.getElementById("total-pemasukan").innerText = formatRp(totalMasuk);
-            document.getElementById("total-pengeluaran").innerText = formatRp(totalKeluar);
-            document.getElementById("total-saldo").innerText = formatRp(saldo);
-            document.getElementById("input-tgl").valueAsDate = new Date();
-
-            lucide.createIcons();
-        }
-
-        function getJadwalData() {
-            let local = localStorage.getItem("hujjaj_jadwal_db");
-            if(!local) {
-                localStorage.setItem("hujjaj_jadwal_db", JSON.stringify(defaultJadwal));
-                return defaultJadwal;
-            }
-            return JSON.parse(local);
-        }
-
-        function renderJadwal() {
-            const listContainer = document.getElementById("jadwal-list-container");
-            const data = getJadwalData();
-            listContainer.innerHTML = "";
-
-            data.forEach((item) => {
-                let card = `
-                <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 space-y-3 relative">
-                    <div class="flex justify-between items-start">
-                        <h4 class="text-base font-extrabold text-slate-800 pr-2">${item.agenda}</h4>
-                        <div class="flex items-center space-x-2">
-                            <span class="bg-amber-100/80 text-amber-800 text-[10px] font-bold px-3 py-1 rounded-full">Rutin</span>
-                            <button onclick="hapusJadwal(${item.id})" class="text-slate-300 hover:text-red-500 transition">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="space-y-1.5 text-xs text-slate-600">
-                        <div class="flex items-center space-x-2">
-                            <i data-lucide="clock" class="w-4 h-4 text-emerald-600"></i>
-                            <span class="font-medium">${item.tgljam}</span>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <i data-lucide="map-pin" class="w-4 h-4 text-emerald-600"></i>
-                            <span class="font-medium">${item.lokasi}</span>
-                        </div>
-                    </div>
-
-                    <div class="pt-2 border-t border-slate-100 text-[11px] text-slate-400 italic">
-                        Informasi Kumpulan Jamiyyatul Hujjaj
-                    </div>
-                </div>`;
-                listContainer.innerHTML += card;
-            });
-
-            lucide.createIcons();
-        }
-
-        function tambahJadwal(e) {
-            e.preventDefault();
-            const data = getJadwalData();
-            const newJadwal = {
-                id: Date.now(),
-                agenda: document.getElementById("jadwal-agenda").value,
-                tgljam: document.getElementById("jadwal-tgljam").value,
-                lokasi: document.getElementById("jadwal-lokasi").value
-            };
-            data.unshift(newJadwal);
-            localStorage.setItem("hujjaj_jadwal_db", JSON.stringify(data));
-
-            document.getElementById("jadwal-agenda").value = "";
-            document.getElementById("jadwal-tgljam").value = "";
-            document.getElementById("jadwal-lokasi").value = "";
-
-            renderJadwal();
-            alert("Jadwal Rutin Berhasil Ditambahkan!");
-        }
-
-        function hapusJadwal(id) {
-            if(confirm("Hapus jadwal ini?")) {
-                let data = getJadwalData().filter(item => item.id !== id);
-                localStorage.setItem("hujjaj_jadwal_db", JSON.stringify(data));
-                renderJadwal();
-            }
-        }
-
         function formatRp(angka) {
             return "Rp " + angka.toLocaleString("id-ID");
         }
@@ -477,36 +449,6 @@
             if(!str) return "-";
             let d = new Date(str);
             return isNaN(d) ? str : d.toLocaleDateString("id-ID", { day: '2-digit', month: '2-digit' });
-        }
-
-        function tambahTransaksi(e) {
-            e.preventDefault();
-            const data = getData();
-            const newObj = {
-                id: Date.now(),
-                tgl: document.getElementById("input-tgl").value,
-                nama: document.getElementById("input-nama").value,
-                jenis: document.getElementById("input-jenis").value,
-                jumlah: parseInt(document.getElementById("input-jumlah").value),
-                ket: document.getElementById("input-ket").value
-            };
-            data.push(newObj);
-            localStorage.setItem("hujjaj_kas_db", JSON.stringify(data));
-            
-            document.getElementById("input-nama").value = "";
-            document.getElementById("input-jumlah").value = "";
-            document.getElementById("input-ket").value = "";
-
-            renderData();
-            alert("Catatan Berhasil Disimpan!");
-        }
-
-        function hapusData(id) {
-            if(confirm("Hapus transaksi ini?")) {
-                let data = getData().filter(item => item.id !== id);
-                localStorage.setItem("hujjaj_kas_db", JSON.stringify(data));
-                renderData();
-            }
         }
 
         function unduhPDF() {
