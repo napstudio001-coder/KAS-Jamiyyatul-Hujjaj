@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JAMIYYATUL HUJJAJ ROMBONGAN06</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- html2pdf untuk Ekspor PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    </style>
+</head>
+<body class="bg-emerald-900 min-h-screen text-slate-800">
+
+    <!-- ================= 1. HALAMAN LOGIN ================= -->
+    <div id="page-login" class="min-h-screen flex items-center justify-center p-4">
+        <div class="bg-white w-full max-w-sm rounded-[2rem] p-6 shadow-2xl text-center space-y-5 my-auto">
+            
+            <!-- Logo Lingkaran dengan Fallback -->
+            <div class="flex justify-center pt-2">
+                <div class="w-20 h-20 rounded-full bg-emerald-50 border-2 border-emerald-400/40 p-2 flex items-center justify-center overflow-hidden shadow-inner relative">
+                    <img src="./logo.png" alt="Logo" class="w-full h-full object-contain" onerror="this.style.display='none'; document.getElementById('icon-fallback-login').classList.remove('hidden');">
+                    <div id="icon-fallback-login" class="hidden text-emerald-600">
+                        <i data-lucide="book-open" class="w-10 h-10"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Judul & Subtitle -->
+            <div class="space-y-1">
+                <h1 class="text-xl font-extrabold text-slate-800 tracking-tight">JAMIYYATUL HUJJAJ</h1>
+                <p class="text-[11px] font-bold text-emerald-700 uppercase tracking-wide">ROMBONGAN 06 KLOTER 63 TH 2024</p>
+                <p class="text-xs text-slate-400 font-medium">Kec. Kebonagung, Kab. Demak</p>
+            </div>
+
+            <!-- Form Login -->
+            <form onsubmit="handleLogin(event)" class="space-y-4 text-left pt-2">
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">USERNAME / NAMA</label>
+                    <div class="relative flex items-center">
+                        <i data-lucide="user" class="w-4 h-4 text-slate-400 absolute left-3.5"></i>
+                        <input type="text" id="login-username" placeholder="Masukkan nama Anda" required class="w-full pl-10 pr-3 py-3 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none bg-slate-50/50">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1.5">KATA SANDI</label>
+                    <div class="relative flex items-center">
+                        <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5"></i>
+                        <input type="password" id="login-password" placeholder="Masukkan kata sandi" required class="w-full pl-10 pr-3 py-3 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none bg-slate-50/50">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-bold py-3.5 rounded-xl text-sm transition shadow-lg shadow-emerald-600/30">
+                    Masuk Aplikasi
+                </button>
+            </form>
+
+            <p class="text-[11px] text-slate-400 pt-2 border-t border-slate-100">Sistem Kas & Jadwal Rutin Anggota</p>
+        </div>
+    </div>
+
+
+    <!-- ================= 2. HALAMAN UTAMA APLIKASI ================= -->
+    <div id="page-app" class="hidden min-h-screen bg-slate-50 pb-24">
+        
+        <!-- Header Lengkung Top Banner -->
+        <header class="bg-gradient-to-b from-emerald-800 to-emerald-900 text-white pt-6 pb-12 px-4 rounded-b-[2.5rem] shadow-md text-center relative">
+            <div class="flex justify-center mb-2">
+                <div class="w-16 h-16 rounded-full bg-white p-1 shadow-lg border-2 border-emerald-400/30 flex items-center justify-center overflow-hidden relative">
+                    <img src="./logo.png" alt="Logo" class="w-full h-full object-contain" onerror="this.style.display='none'; document.getElementById('icon-fallback-app').classList.remove('hidden');">
+                    <div id="icon-fallback-app" class="hidden text-emerald-800">
+                        <i data-lucide="book-open" class="w-8 h-8"></i>
+                    </div>
+                </div>
+            </div>
+            <h1 class="text-base font-extrabold tracking-wide uppercase text-amber-300">JAMIYYATUL HUJJAJ ROMBONGAN 06</h1>
+            <p class="text-xs text-emerald-100 font-medium mt-0.5">Kloter 63 Th 2024 - Kebonagung, Demak</p>
+            
+            <!-- Tombol Keluar / Logout -->
+            <button onclick="handleLogout()" class="absolute top-4 right-4 bg-emerald-700/60 hover:bg-emerald-700 text-emerald-100 px-3 py-1 rounded-full border border-emerald-500/40 text-[11px] font-semibold flex items-center gap-1 backdrop-blur-sm transition">
+                <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+                <span>Keluar</span>
+            </button>
+        </header>
+
+        <main class="max-w-md mx-auto px-4 -mt-6 space-y-4">
+
+            <!-- ================= TAB 1: KEUANGAN ================= -->
+            <div id="tab-keuangan" class="space-y-4">
+                
+                <!-- Ringkasan Pemasukan & Pengeluaran -->
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+                        <div class="flex items-center space-x-1.5 text-emerald-600 mb-1">
+                            <i data-lucide="arrow-down-left" class="w-4 h-4"></i>
+                            <span class="text-xs font-semibold text-slate-500">Pemasukan</span>
+                        </div>
+                        <p class="text-lg font-bold text-slate-800" id="total-pemasukan">Rp 0</p>
+                    </div>
+                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100">
+                        <div class="flex items-center space-x-1.5 text-rose-500 mb-1">
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                            <span class="text-xs font-semibold text-slate-500">Pengeluaran</span>
+                        </div>
+                        <p class="text-lg font-bold text-slate-800" id="total-pengeluaran">Rp 0</p>
+                    </div>
+                </div>
+
+                <!-- Kartu Sisa Saldo Kas Utama -->
+                <div class="bg-gradient-to-r from-emerald-800 to-teal-800 text-white rounded-2xl p-5 shadow-lg relative overflow-hidden flex justify-between items-center">
+                    <div>
+                        <p class="text-xs font-medium text-emerald-200">Sisa Saldo Kas Utama</p>
+                        <h3 class="text-3xl font-extrabold tracking-tight text-amber-300 mt-1" id="total-saldo">Rp 0</h3>
+                    </div>
+                    <div class="bg-white/10 p-3 rounded-2xl backdrop-blur-md border border-white/10">
+                        <i data-lucide="wallet" class="w-7 h-7 text-amber-300"></i>
+                    </div>
+                </div>
+
+                <!-- Highlight Anggota -->
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3">
+                    <div class="flex justify-between items-center border-b border-slate-100 pb-2">
+                        <div class="flex items-center space-x-2 text-emerald-700">
+                            <i data-lucide="users" class="w-4 h-4"></i>
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700">HIGHLIGHT ANGGOTA</h4>
+                        </div>
+                        <span class="text-[10px] bg-emerald-50 text-emerald-600 px-2.5 py-0.5 rounded-full font-semibold border border-emerald-100">Otomatis</span>
+                    </div>
+
+                    <div id="highlight-list" class="space-y-2">
+                        <!-- Item highlight dimasukkan via JS -->
+                    </div>
+                </div>
+
+                <!-- Form Tambah Catatan Transaksi -->
+                <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3">
+                    <div class="flex items-center space-x-2 text-emerald-700 pb-2 border-b border-slate-100">
+                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700">TAMBAH CATATAN TRANSAKSI</h4>
+                    </div>
+
+                    <form onsubmit="tambahTransaksi(event)" class="space-y-3">
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">JENIS</label>
+                                <select id="input-jenis" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none bg-slate-50 font-medium">
+                                    <option value="pemasukan">Pemasukan (+)</option>
+                                    <option value="pengeluaran">Pengeluaran (-)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">JUMLAH (RP)</label>
+                                <input type="number" id="input-jumlah" placeholder="0" required class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none bg-slate-50 font-semibold">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">NAMA JAMAAH (JIKA ADA)</label>
+                            <input type="text" id="input-nama" placeholder="Contoh: H. Warjo" required class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none bg-slate-50">
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">KETERANGAN / KEPERLUAN</label>
+                            <input type="text" id="input-ket" placeholder="Contoh: Pertemuan rutin / Sewa bus" class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none bg-slate-50">
+                        </div>
+
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">TANGGAL</label>
+                            <input type="date" id="input-tgl" required class="w-full px-3 py-2 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none bg-slate-50">
+                        </div>
+
+                        <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded-xl text-xs transition shadow-md flex items-center justify-center space-x-1.5">
+                            <i data-lucide="save" class="w-4 h-4"></i>
+                            <span>Simpan Transaksi</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Tabel Detail Rekapitulasi Kas -->
+                <div id="content-to-pdf" class="bg-white rounded-2xl p-4 shadow-sm border border-slate-100 space-y-3">
+                    <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+                        <div class="flex items-center space-x-2 text-emerald-700">
+                            <i data-lucide="receipt" class="w-4 h-4"></i>
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-slate-700">RIWAYAT TRANSAKSI</h4>
+                        </div>
+                        <button onclick="unduhPDF()" class="text-[10px] text-emerald-700 hover:underline font-semibold flex items-center gap-1">
+                            <i data-lucide="download" class="w-3 h-3"></i> Cetak PDF
+                        </button>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="bg-slate-50 text-[10px] text-slate-400 uppercase border-b border-slate-100">
+                                    <th class="py-2 px-1">Tgl</th>
+                                    <th class="py-2 px-1">Uraian</th>
+                                    <th class="py-2 px-1 text-right">Jumlah</th>
+                                    <th class="py-2 px-1 text-center w-6"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tabel-body" class="text-xs divide-y divide-slate-100">
+                                <!-- Data dimasukkan via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- ================= TAB 2: JADWAL KUMPULAN ================= -->
+            <div id="tab-jadwal" class="hidden space-y-4">
+                
+                <!-- Card Form Tambah Jadwal Rutin -->
+                <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 space-y-4">
+                    <div class="flex items-center space-x-2 text-emerald-800">
+                        <i data-lucide="calendar-plus" class="w-5 h-5"></i>
+                        <h4 class="text-sm font-extrabold uppercase tracking-wide">TAMBAH JADWAL RUTIN</h4>
+                    </div>
+
+                    <form onsubmit="tambahJadwal(event)" class="space-y-3">
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">AGENDA / ACARA</label>
+                            <input type="text" id="jadwal-agenda" placeholder="Contoh: Rutinan Jamiyyatul Hujjaj" required class="w-full px-3 py-2.5 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none bg-slate-50/50">
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2">
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">TANGGAL & JAM</label>
+                                <input type="text" id="jadwal-tgljam" placeholder="Sabtu, 15 Ags 13:00" required class="w-full px-3 py-2.5 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none bg-slate-50/50">
+                            </div>
+                            <div>
+                                <label class="block text-[10px] font-bold uppercase text-slate-400 mb-1">LOKASI / TUAN RUMAH</label>
+                                <input type="text" id="jadwal-lokasi" placeholder="Kediaman H. Warjo" required class="w-full px-3 py-2.5 text-xs border border-slate-200 rounded-xl focus:ring-2 focus:ring-emerald-500 outline-none bg-slate-50/50">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 active:scale-[0.99] text-white font-bold py-3 rounded-xl text-xs transition shadow-md mt-1">
+                            Tambah Jadwal
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Container List Jadwal Rutin -->
+                <div id="jadwal-list-container" class="space-y-3">
+                    <!-- Kartu Jadwal dimasukkan via JavaScript -->
+                </div>
+
+            </div>
+
+        </main>
+
+        <!-- BOTTOM NAVIGATION BAR -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2 z-50 shadow-lg">
+            <div class="max-w-md mx-auto grid grid-cols-2 gap-2 px-6">
+                <button id="nav-btn-keuangan" onclick="switchTab('keuangan')" class="flex flex-col items-center justify-center space-y-1 text-emerald-600 font-bold text-xs">
+                    <i data-lucide="badge-dollar-sign" class="w-6 h-6"></i>
+                    <span>Keuangan</span>
+                </button>
+                <button id="nav-btn-jadwal" onclick="switchTab('jadwal')" class="flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-emerald-600 font-bold text-xs">
+                    <i data-lucide="calendar-range" class="w-6 h-6"></i>
+                    <span>Jadwal Kumpulan</span>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <script>
+        const defaultData = [
+            { id: 1, tgl: "2026-07-01", nama: "Saldo Utama", jenis: "pemasukan", jumlah: 3600000, ket: "Saldo awal" },
+            { id: 2, tgl: "2026-07-05", nama: "H. Warjo", jenis: "pemasukan", jumlah: 300000, ket: "Iuran rutinan" },
+            { id: 3, tgl: "2026-07-05", nama: "Pengeluaran Santunan", jenis: "pengeluaran", jumlah: 300000, ket: "Acara sosial" },
+            { id: 4, tgl: "2026-07-05", nama: "Sewa Bus Rihlah", jenis: "pengeluaran", jumlah: 3200000, ket: "Ziarah Magelang" },
+            { id: 5, tgl: "2026-08-09", nama: "Penambahan biaya", jenis: "pengeluaran", jumlah: 400000, ket: "Ziarah Magelang" },
+            { id: 6, tgl: "2026-07-05", nama: "H. Bambang", jenis: "pemasukan", jumlah: 300000, ket: "Iuran rutinan" }
+        ];
+
+        // DIBERSIHKAN: Menambahkan koma antar objek array
+        const defaultJadwal = [
+            { id: 1, agenda: "Selapanan Ahad Pon", tgljam: "Ahad 09 Ags 2026 - 13:00 WIB", lokasi: "Kediaman H. Bambang (Mijen)" },
+            { id: 2, agenda: "Selapanan Ahad Pon", tgljam: "Ahad 13 September 2026 - 13:00 WIB", lokasi: "Kediaman H. Sholihin (Dempet)" }
+        ];
+
+        function handleLogin(e) {
+            e.preventDefault();
+            
+            // Ambil input username & password
+            const u = document.getElementById("login-username").value.trim();
+            const p = document.getElementById("login-password").value.trim();
+
+            // Kamu bisa sesuaikan credential di sini jika mau dikunci
+            if (u !== "" && p !== "") {
+                document.getElementById("page-login").classList.add("hidden");
+                document.getElementById("page-app").classList.remove("hidden");
+                renderData();
+                renderJadwal();
+            } else {
+                alert("Masukkan username dan password!");
+            }
+        }
+
+        function handleLogout() {
+            document.getElementById("page-app").classList.add("hidden");
+            document.getElementById("page-login").classList.remove("hidden");
+        }
+
+        function switchTab(tabName) {
+            const tabKeuangan = document.getElementById("tab-keuangan");
+            const tabJadwal = document.getElementById("tab-jadwal");
+            const btnKeuangan = document.getElementById("nav-btn-keuangan");
+            const btnJadwal = document.getElementById("nav-btn-jadwal");
+
+            if (tabName === 'keuangan') {
+                tabKeuangan.classList.remove("hidden");
+                tabJadwal.classList.add("hidden");
+                btnKeuangan.className = "flex flex-col items-center justify-center space-y-1 text-emerald-600 font-bold text-xs";
+                btnJadwal.className = "flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-emerald-600 font-bold text-xs";
+            } else {
+                tabKeuangan.classList.add("hidden");
+                tabJadwal.classList.remove("hidden");
+                btnJadwal.className = "flex flex-col items-center justify-center space-y-1 text-emerald-600 font-bold text-xs";
+                btnKeuangan.className = "flex flex-col items-center justify-center space-y-1 text-slate-400 hover:text-emerald-600 font-bold text-xs";
+            }
+        }
+
+        function getData() {
+            let local = localStorage.getItem("hujjaj_kas_db");
+            if(!local) {
+                localStorage.setItem("hujjaj_kas_db", JSON.stringify(defaultData));
+                return defaultData;
+            }
+            return JSON.parse(local);
+        }
+
+        function renderData() {
+            const data = getData();
+            const tbody = document.getElementById("tabel-body");
+            const highlightList = document.getElementById("highlight-list");
+            
+            tbody.innerHTML = "";
+            highlightList.innerHTML = "";
+
+            let totalMasuk = 0;
+            let totalKeluar = 0;
+
+            data.forEach((item) => {
+                let jml = parseInt(item.jumlah);
+                if (item.jenis === "pemasukan") {
+                    totalMasuk += jml;
+                } else {
+                    totalKeluar += jml;
+                }
+
+                if(item.jenis === "pemasukan") {
+                    let hRow = `<div class="flex justify-between items-center bg-emerald-50/60 px-3 py-2 rounded-xl">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="user-check" class="w-4 h-4 text-emerald-600"></i>
+                            <span class="text-xs font-semibold text-slate-700">${item.nama}</span>
+                        </div>
+                        <span class="text-xs font-bold text-emerald-800">${formatRp(jml)}</span>
+                    </div>`;
+                    highlightList.innerHTML += hRow;
+                }
+
+                let btnHapus = `<td class="py-2 px-1 text-center"><button onclick="hapusData(${item.id})" class="text-red-500 hover:text-red-700"><i data-lucide="trash-2" class="w-3.5 h-3.5"></i></button></td>`;
+
+                let row = `<tr>
+                    <td class="py-2.5 px-1 whitespace-nowrap text-[10px] text-slate-400 font-medium">${formatTgl(item.tgl)}</td>
+                    <td class="py-2.5 px-1">
+                        <span class="font-semibold text-slate-800 block leading-tight">${item.nama}</span>
+                        <span class="text-[10px] text-slate-400 block">${item.ket || '-'}</span>
+                    </td>
+                    <td class="py-2.5 px-1 text-right font-bold whitespace-nowrap ${item.jenis === 'pemasukan' ? 'text-emerald-600' : 'text-rose-500'}">
+                        ${item.jenis === 'pemasukan' ? '+' : '-'} ${formatRp(jml)}
+                    </td>
+                    ${btnHapus}
+                </tr>`;
+                tbody.innerHTML += row;
+            });
+
+            let saldo = totalMasuk - totalKeluar;
+
+            document.getElementById("total-pemasukan").innerText = formatRp(totalMasuk);
+            document.getElementById("total-pengeluaran").innerText = formatRp(totalKeluar);
+            document.getElementById("total-saldo").innerText = formatRp(saldo);
+            document.getElementById("input-tgl").valueAsDate = new Date();
+
+            lucide.createIcons();
+        }
+
+        function getJadwalData() {
+            let local = localStorage.getItem("hujjaj_jadwal_db");
+            if(!local) {
+                localStorage.setItem("hujjaj_jadwal_db", JSON.stringify(defaultJadwal));
+                return defaultJadwal;
+            }
+            return JSON.parse(local);
+        }
+
+        function renderJadwal() {
+            const listContainer = document.getElementById("jadwal-list-container");
+            const data = getJadwalData();
+            listContainer.innerHTML = "";
+
+            data.forEach((item) => {
+                let card = `
+                <div class="bg-white rounded-3xl p-5 shadow-sm border border-slate-100 space-y-3 relative">
+                    <div class="flex justify-between items-start">
+                        <h4 class="text-base font-extrabold text-slate-800 pr-2">${item.agenda}</h4>
+                        <div class="flex items-center space-x-2">
+                            <span class="bg-amber-100/80 text-amber-800 text-[10px] font-bold px-3 py-1 rounded-full">Rutin</span>
+                            <button onclick="hapusJadwal(${item.id})" class="text-slate-300 hover:text-red-500 transition">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5 text-xs text-slate-600">
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="clock" class="w-4 h-4 text-emerald-600"></i>
+                            <span class="font-medium">${item.tgljam}</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-emerald-600"></i>
+                            <span class="font-medium">${item.lokasi}</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 border-t border-slate-100 text-[11px] text-slate-400 italic">
+                        Informasi Kumpulan Jamiyyatul Hujjaj
+                    </div>
+                </div>`;
+                listContainer.innerHTML += card;
+            });
+
+            lucide.createIcons();
+        }
+
+        function tambahJadwal(e) {
+            e.preventDefault();
+            const data = getJadwalData();
+            const newJadwal = {
+                id: Date.now(),
+                agenda: document.getElementById("jadwal-agenda").value,
+                tgljam: document.getElementById("jadwal-tgljam").value,
+                lokasi: document.getElementById("jadwal-lokasi").value
+            };
+            data.unshift(newJadwal);
+            localStorage.setItem("hujjaj_jadwal_db", JSON.stringify(data));
+
+            document.getElementById("jadwal-agenda").value = "";
+            document.getElementById("jadwal-tgljam").value = "";
+            document.getElementById("jadwal-lokasi").value = "";
+
+            renderJadwal();
+            alert("Jadwal Rutin Berhasil Ditambahkan!");
+        }
+
+        function hapusJadwal(id) {
+            if(confirm("Hapus jadwal ini?")) {
+                let data = getJadwalData().filter(item => item.id !== id);
+                localStorage.setItem("hujjaj_jadwal_db", JSON.stringify(data));
+                renderJadwal();
+            }
+        }
+
+        function formatRp(angka) {
+            return "Rp " + angka.toLocaleString("id-ID");
+        }
+
+        function formatTgl(str) {
+            if(!str) return "-";
+            let d = new Date(str);
+            return isNaN(d) ? str : d.toLocaleDateString("id-ID", { day: '2-digit', month: '2-digit' });
+        }
+
+        function tambahTransaksi(e) {
+            e.preventDefault();
+            const data = getData();
+            const newObj = {
+                id: Date.now(),
+                tgl: document.getElementById("input-tgl").value,
+                nama: document.getElementById("input-nama").value,
+                jenis: document.getElementById("input-jenis").value,
+                jumlah: parseInt(document.getElementById("input-jumlah").value),
+                ket: document.getElementById("input-ket").value
+            };
+            data.push(newObj);
+            localStorage.setItem("hujjaj_kas_db", JSON.stringify(data));
+            
+            document.getElementById("input-nama").value = "";
+            document.getElementById("input-jumlah").value = "";
+            document.getElementById("input-ket").value = "";
+
+            renderData();
+            alert("Catatan Berhasil Disimpan!");
+        }
+
+        function hapusData(id) {
+            if(confirm("Hapus transaksi ini?")) {
+                let data = getData().filter(item => item.id !== id);
+                localStorage.setItem("hujjaj_kas_db", JSON.stringify(data));
+                renderData();
+            }
+        }
+
+        function unduhPDF() {
+            const element = document.getElementById('content-to-pdf');
+            const opt = {
+                margin:       8,
+                filename:     'Laporan_Kas_Jamiyyatul_Hujjaj.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>
